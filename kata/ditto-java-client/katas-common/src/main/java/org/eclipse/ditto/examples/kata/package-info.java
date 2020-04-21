@@ -12,6 +12,6 @@
  */
 
 /**
- * The content of this package is of general purpose and thus subject to be moved in its own library in future
+ * The content of this package is of general purpose.
  */
 package org.eclipse.ditto.examples.kata;

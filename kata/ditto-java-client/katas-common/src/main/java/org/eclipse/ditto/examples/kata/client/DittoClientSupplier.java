@@ -33,7 +33,7 @@ import org.eclipse.ditto.model.base.json.JsonSchemaVersion;
 import com.neovisionaries.ws.client.WebSocket;
 
 /**
- * This class provides a {@link DittoClient} based on the given {@link org.eclipse.ditto.examples.kata.config.ConfigProperties}.
+ * This class provides a {@link org.eclipse.ditto.client.DittoClient} based on the given {@link org.eclipse.ditto.examples.kata.config.ConfigProperties}.
  */
 @Immutable
 public final class DittoClientSupplier implements Supplier<DittoClient> {

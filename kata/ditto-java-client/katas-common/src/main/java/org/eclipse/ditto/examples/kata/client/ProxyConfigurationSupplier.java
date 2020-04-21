@@ -24,7 +24,7 @@ import org.eclipse.ditto.client.configuration.ProxyConfiguration;
 import org.eclipse.ditto.examples.kata.config.ConfigProperties;
 
 /**
- * This class provides the {@link ProxyConfiguration} for building a DittoClient.
+ * This class provides the {@link org.eclipse.ditto.client.configuration.ProxyConfiguration} for building a DittoClient.
  */
 @Immutable
 final class ProxyConfigurationSupplier implements Supplier<Optional<ProxyConfiguration>> {

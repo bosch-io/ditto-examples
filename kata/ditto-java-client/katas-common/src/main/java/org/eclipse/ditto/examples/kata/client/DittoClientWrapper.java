@@ -29,7 +29,7 @@ import org.eclipse.ditto.model.things.Thing;
 import org.eclipse.ditto.protocoladapter.Adaptable;
 
 /**
- * This wrapper of {@link DittoClient} provides additional methods for registering handlers for created things and
+ * This wrapper of {@link org.eclipse.ditto.client.DittoClient} provides additional methods for registering handlers for created things and
  * policies.
  * This is useful for cleaning up.
  */

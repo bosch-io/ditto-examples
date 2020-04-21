@@ -24,27 +24,14 @@
         <relativePath>../</relativePath>
     </parent>
 
-    <artifactId>ditto-java-client-search-management</artifactId>
-    <name>Kata :: ditto-java-client :: Search Management</name>
+    <artifactId>ditto-java-client-acknowledgements</artifactId>
+    <name>Kata :: ditto-java-client :: Acknowledgements</name>
 
     <dependencies>
-        <!-- ### Compile ### -->
         <dependency>
             <groupId>org.eclipse.ditto</groupId>
             <artifactId>ditto-java-client-katas-common</artifactId>
             <version>${project.version}</version>
-        </dependency>
-        
-        <dependency>
-            <groupId>org.reactivestreams</groupId>
-            <artifactId>reactive-streams</artifactId>
-            <version>1.0.3</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-stream_2.12</artifactId>
-            <version>2.5.29</version>
         </dependency>
     </dependencies>
 
