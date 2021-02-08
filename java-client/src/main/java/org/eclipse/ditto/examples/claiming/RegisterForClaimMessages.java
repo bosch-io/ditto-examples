@@ -16,7 +16,7 @@ import static org.eclipse.ditto.model.things.AccessControlListModelFactory.allPe
 
 import java.time.OffsetDateTime;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -26,8 +26,6 @@ import org.eclipse.ditto.client.live.messages.RepliableMessage;
 import org.eclipse.ditto.examples.common.ExamplesBase;
 import org.eclipse.ditto.json.JsonFactory;
 import org.eclipse.ditto.model.base.common.HttpStatusCode;
-import org.eclipse.ditto.model.things.AccessControlListModelFactory;
-import org.eclipse.ditto.model.things.AclEntry;
 import org.eclipse.ditto.model.things.Thing;
 import org.eclipse.ditto.model.things.ThingId;
 import org.slf4j.Logger;
@@ -82,7 +80,7 @@ public final class RegisterForClaimMessages extends ExamplesBase {
      */
     private void registerForClaimMessagesToSingleThing()
             throws InterruptedException, ExecutionException, TimeoutException {
-        client1.live().startConsumption().get(10, TimeUnit.SECONDS);
+        client1.live().startConsumption().toCompletableFuture().get(10, TimeUnit.SECONDS);
         prepareClaimableThing()
                 .thenAccept(thingHandle -> {
                     thingHandle.registerForClaimMessage(registrationIdClaimMessagesForThing, this::handleMessage);
@@ -90,7 +88,7 @@ public final class RegisterForClaimMessages extends ExamplesBase {
                 });
     }
 
-    private CompletableFuture<LiveThingHandle> prepareClaimableThing() {
+    private CompletionStage<LiveThingHandle> prepareClaimableThing() {
         final ThingId thingId = randomThingId();
         return client1.twin().create(thingId)
                 .thenCompose(created -> {

@@ -90,7 +90,7 @@ public class ManageFeatures extends ExamplesBase {
             LOGGER.info("FeatureChange for featureId {} received on path {} - value was: {}", featureId, path, value);
         });
 
-        client1.twin().create(thing).get(TIMEOUT, SECONDS);
+        client1.twin().create(thing).toCompletableFuture().get(TIMEOUT, SECONDS);
 
         final ThingHandle<TwinFeatureHandle> thingHandle = client1.twin().forId(thingId);
 
@@ -104,7 +104,7 @@ public class ManageFeatures extends ExamplesBase {
                     return thingHandle.putFeature(ThingsModelFactory.newFeature(FEATURE_ID)
                             .setProperty(PROPERTY_JSON_POINTER, PROPERTY_JSON_VALUE));
                 }).thenCompose(aVoid -> thingHandle.forFeature(FEATURE_ID).delete())
-                .get(TIMEOUT, SECONDS);
+                .toCompletableFuture().get(TIMEOUT, SECONDS);
     }
 
     private void crudFeatureProperty() throws InterruptedException, ExecutionException, TimeoutException {
@@ -118,7 +118,7 @@ public class ManageFeatures extends ExamplesBase {
 
         startConsumeChanges(client1);
 
-        client1.twin().create(thing).get(TIMEOUT, SECONDS);
+        client1.twin().create(thing).toCompletableFuture().get(TIMEOUT, SECONDS);
 
         final FeatureHandle featureHandle = client1.twin().forFeature(thingId, FEATURE_ID);
 
@@ -147,7 +147,7 @@ public class ManageFeatures extends ExamplesBase {
                     return featureHandle.putProperty(PROPERTY_JSON_POINTER, 0.9);
                 })
                 .thenCompose(aVoid -> featureHandle.deleteProperty(PROPERTY_JSON_POINTER))
-                .get(TIMEOUT, SECONDS);
+                .toCompletableFuture().get(TIMEOUT, SECONDS);
     }
 
     private void crudFeatureProperties() throws InterruptedException, ExecutionException, TimeoutException {
@@ -161,7 +161,7 @@ public class ManageFeatures extends ExamplesBase {
 
         startConsumeChanges(client1);
 
-        client1.twin().create(thing).get(TIMEOUT, SECONDS);
+        client1.twin().create(thing).toCompletableFuture().get(TIMEOUT, SECONDS);
 
         final FeatureHandle featureHandle = client1.twin().forFeature(thingId, FEATURE_ID);
 
@@ -179,7 +179,7 @@ public class ManageFeatures extends ExamplesBase {
                             .set(PROPERTY_JSON_POINTER, 0.9)
                             .build());
                 }).thenCompose(aVoid -> featureHandle.deleteProperties())
-                .get(TIMEOUT, SECONDS);
+                .toCompletableFuture().get(TIMEOUT, SECONDS);
     }
 
     private void deleteFeatures() throws InterruptedException, ExecutionException, TimeoutException {
@@ -197,7 +197,7 @@ public class ManageFeatures extends ExamplesBase {
 
         final Twin twin = client1.twin();
 
-        twin.create(thing).get(TIMEOUT, SECONDS);
+        twin.create(thing).toCompletableFuture().get(TIMEOUT, SECONDS);
 
         final TwinThingHandle thingHandle = twin.forId(thingId);
 
@@ -207,7 +207,7 @@ public class ManageFeatures extends ExamplesBase {
 
         thingHandle.deleteFeatures().thenCompose(aVoid -> thingHandle.retrieve())
                 .thenAccept(thing1 -> LOGGER.info("Features have been deleted: {}", thing1.toJsonString()))
-                .get(TIMEOUT, SECONDS);
+                .toCompletableFuture().get(TIMEOUT, SECONDS);
     }
 
 }

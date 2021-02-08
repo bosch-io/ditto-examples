@@ -64,7 +64,7 @@ public class RegisterForAndSendLiveCommands extends ExamplesBase {
                             .setFeature(ThingsModelFactory.newFeature(FEATURE_ID))
                             .build();
             return client1.twin().update(updated);
-        }).get(2, TimeUnit.SECONDS);
+        }).toCompletableFuture().get(2, TimeUnit.SECONDS);
 
         LOGGER.info("[AT DEVICE] register handler for 'ModifyFeatureProperty' LIVE commands..");
         client2.live()
@@ -82,8 +82,8 @@ public class RegisterForAndSendLiveCommands extends ExamplesBase {
                 });
 
         try {
-            client2.live().startConsumption().get(10, TimeUnit.SECONDS);
-            client1.live().startConsumption().get(10, TimeUnit.SECONDS);
+            client2.live().startConsumption().toCompletableFuture().get(10, TimeUnit.SECONDS);
+            client1.live().startConsumption().toCompletableFuture().get(10, TimeUnit.SECONDS);
         } catch (final InterruptedException | ExecutionException | TimeoutException e) {
             Thread.currentThread().interrupt();
             throw new IllegalStateException("Error creating Things Client.", e);
@@ -100,7 +100,7 @@ public class RegisterForAndSendLiveCommands extends ExamplesBase {
                         LOGGER.info("[AT BACKEND] Putting the property succeeded");
                     }
                     latch.countDown();
-                }).get(10, TimeUnit.SECONDS);
+                }).toCompletableFuture().get(10, TimeUnit.SECONDS);
 
         if (latch.await(10, TimeUnit.SECONDS)) {
             LOGGER.info("Received all expected events!");

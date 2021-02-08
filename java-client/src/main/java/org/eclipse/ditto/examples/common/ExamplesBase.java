@@ -68,7 +68,7 @@ public abstract class ExamplesBase {
 
     protected void startConsumeChanges(final DittoClient client) {
         try {
-            client.twin().startConsumption().get(10, TimeUnit.SECONDS);
+            client.twin().startConsumption().toCompletableFuture().get(10, TimeUnit.SECONDS);
         } catch (final InterruptedException | ExecutionException | TimeoutException e) {
             Thread.currentThread().interrupt();
             throw new IllegalStateException("Error subscribing to change events.", e);
@@ -89,7 +89,11 @@ public abstract class ExamplesBase {
         final MessagingProvider messagingProvider =
                 MessagingProviders.webSocket(messagingConfigurationBuilder.build(), authenticationProvider);
 
-        return DittoClients.newInstance(messagingProvider, messagingProvider, buildMessageSerializerRegistry());
+        return DittoClients.newInstance(messagingProvider, messagingProvider, messagingProvider,
+                buildMessageSerializerRegistry())
+                .connect()
+                .toCompletableFuture()
+                .join();
     }
 
     private AuthenticationProvider<WebSocket> buildAuthenticationProvider() {

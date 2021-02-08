@@ -65,7 +65,7 @@ public class RegisterForAndEmitLiveEvents extends ExamplesBase {
                     created.toBuilder()
                             .build();
             return client1.twin().update(updated);
-        }).get(2, TimeUnit.SECONDS);
+        }).toCompletableFuture().get(2, TimeUnit.SECONDS);
 
         LOGGER.info("[AT BACKEND] register for LIVE attribute changes of attribute 'location'..");
         client1.live()
@@ -86,7 +86,7 @@ public class RegisterForAndEmitLiveEvents extends ExamplesBase {
                 });
 
         try {
-            client1.live().startConsumption().get(10, TimeUnit.SECONDS);
+            client1.live().startConsumption().toCompletableFuture().get(10, TimeUnit.SECONDS);
         } catch (final InterruptedException | ExecutionException | TimeoutException e) {
             Thread.currentThread().interrupt();
             throw new IllegalStateException("Error creating Things Client.", e);

@@ -86,7 +86,7 @@ public class ManageThings extends ExamplesBase {
                 .thenCompose(thing -> {
                     LOGGER.info("My thing as persisted: {}", thing);
                     return thingHandle.delete();
-                }).get(10, TimeUnit.SECONDS);
+                }).toCompletableFuture().get(10, TimeUnit.SECONDS);
     }
 
     /**
@@ -116,7 +116,7 @@ public class ManageThings extends ExamplesBase {
             } else {
                 LOGGER.error("Create Thing Failed", throwable);
             }
-        }).get(1, TimeUnit.SECONDS);
+        }).toCompletableFuture().get(1, TimeUnit.SECONDS);
     }
 
     /**
@@ -134,7 +134,7 @@ public class ManageThings extends ExamplesBase {
         LOGGER.info("Starting: retrieveThings()");
         /* Retrieve a Single Thing*/
         client1.twin().forId(complexThingId).retrieve().thenAccept(thing -> LOGGER.info("Retrieved thing: {}", thing))
-                .get(1, TimeUnit.SECONDS);
+                .toCompletableFuture().get(1, TimeUnit.SECONDS);
 
         /* Retrieve a List of Things */
         client1.twin().retrieve(myThingId, complexThingId).thenAccept(things -> {
@@ -144,7 +144,7 @@ public class ManageThings extends ExamplesBase {
             } else {
                 LOGGER.info("Retrieved things: {}", Arrays.toString(things.toArray()));
             }
-        }).get(1, TimeUnit.SECONDS);
+        }).toCompletableFuture().get(1, TimeUnit.SECONDS);
 
         /* Retrieve a List of Things with field selectors */
         client1.twin().retrieve(JsonFieldSelector.newInstance("attributes"), myThingId, complexThingId)
@@ -156,7 +156,7 @@ public class ManageThings extends ExamplesBase {
                         things.forEach(
                                 thing -> LOGGER.info("Thing {} has attributes {}.", thing, thing.getAttributes()));
                     }
-                }).get(1, TimeUnit.SECONDS);
+                }).toCompletableFuture().get(1, TimeUnit.SECONDS);
     }
 
     private void updateThing() throws InterruptedException, TimeoutException, ExecutionException {
@@ -197,7 +197,7 @@ public class ManageThings extends ExamplesBase {
             } else {
                 LOGGER.info("Update successful!");
             }
-        }).get(2, TimeUnit.SECONDS);
+        }).toCompletableFuture().get(2, TimeUnit.SECONDS);
 
         final boolean allMessagesReceived = countDownLatch.await(10, TimeUnit.SECONDS);
         LOGGER.info("All events received: {}", allMessagesReceived);

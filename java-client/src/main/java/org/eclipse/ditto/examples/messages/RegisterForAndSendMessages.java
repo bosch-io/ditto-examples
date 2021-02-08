@@ -66,7 +66,7 @@ public final class RegisterForAndSendMessages extends ExamplesBase {
                         final Thing updated = created.toBuilder()
                                 .build();
                         return client1.twin().update(updated);
-                    }).get(10, TimeUnit.SECONDS);
+                    }).toCompletableFuture().get(10, TimeUnit.SECONDS);
 
 
             LOGGER.info("Creating thing {} as message sink.", toThingId);
@@ -75,10 +75,10 @@ public final class RegisterForAndSendMessages extends ExamplesBase {
                         final Thing updated = created.toBuilder()
                                 .build();
                         return client1.twin().update(updated);
-                    }).get(10, TimeUnit.SECONDS);
+                    }).toCompletableFuture().get(10, TimeUnit.SECONDS);
 
-            client1.live().startConsumption().get(10, TimeUnit.SECONDS);
-            client2.live().startConsumption().get(10, TimeUnit.SECONDS);
+            client1.live().startConsumption().toCompletableFuture().get(10, TimeUnit.SECONDS);
+            client2.live().startConsumption().toCompletableFuture().get(10, TimeUnit.SECONDS);
 
             registerForMessages();
             sendMessages();

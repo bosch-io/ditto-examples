@@ -119,7 +119,7 @@ public final class RegisterForChanges extends ExamplesBase {
                                 .setAttribute(JsonPointer.of("foo"), JsonValue.of("bar"))
                                 .build();
                         return client.twin().update(updatedThing);
-                    }).get(10, TimeUnit.SECONDS);
+                    }).toCompletableFuture().get(10, TimeUnit.SECONDS);
         } catch (final InterruptedException | ExecutionException | TimeoutException e) {
             throw new IllegalStateException(e);
         }
