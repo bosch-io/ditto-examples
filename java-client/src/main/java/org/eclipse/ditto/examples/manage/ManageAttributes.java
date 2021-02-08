@@ -75,7 +75,7 @@ public class ManageAttributes extends ExamplesBase {
                 .build();
 
         final Twin twin = client1.twin();
-        twin.create(thing).get(TIMEOUT, SECONDS);
+        twin.create(thing).toCompletableFuture().get(TIMEOUT, SECONDS);
         final TwinThingHandle thingHandle = twin.forId(thingId);
 
         thingHandle.putAttribute(ATTRIBUTE_JSON_POINTER1, NEW_ATTRIBUTE_JSON_VALUE)
@@ -86,7 +86,7 @@ public class ManageAttributes extends ExamplesBase {
                 .thenAccept(
                         thing2 -> LOGGER.info("RETRIEVED thing after attributes where deleted is {}",
                                 thing2.toJsonString()))
-                .get(5, TimeUnit.SECONDS);
+                .toCompletableFuture().get(5, TimeUnit.SECONDS);
     }
 
 }
